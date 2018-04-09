@@ -1,0 +1,13 @@
+---
+title: "HW1"
+author: "Maria Diego"
+date: "4/10/2018"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
