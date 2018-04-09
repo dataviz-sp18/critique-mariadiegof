@@ -7,7 +7,79 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+
+
 ```
 
+# Part 1: Visualization critique
+
+The graph used is the last graph "Create Your Own Mobility Animations" from the NYT article: "Income Mobility Charts for Girls, Asian-Americans and Other Groups. Or Make Your Own."
+
+Source : https://www.nytimes.com/interactive/2018/03/27/upshot/make-your-own-mobility-animation.html?rref=collection%2Fsectioncollection%2Fupshot
+
+•	Is it truthful?
+
+The graph is explaining the results of a recently published paper “Race and Economic Opportunity in the United States: An Intergenerational Perspective” by Raj Chetty (Stanford), Nathaniel Hendren (Harvard), Maggie R. Jones (U.S. Census Bureau), and Sonya Porter (U.S. Census Bureau). 
+
+The graph is truthful in the sense that is using accurate data and statistics published in this paper. It is truthful because it is showing the paper’s results in terms of percentages, but if you don’t go to the previously published article, you wouldn’t know that these graphs assume equally distribution at the starting point instead of real distributions of the sample where of the 20 million American children followed in the study 90% of rich households are white. It is not clear in this second article what the graphs are projecting for these 50,000 children is a virtual distribution and not the actual data. 
+
+•	Is it functional?
+
+The purpose of this “make your own” graph is to experiment and see the striking findings from the paper in a fun and dynamic way. Even though the graph caught my attention, I had to read the previous article (https://www.nytimes.com/interactive/2018/03/19/upshot/race-class-white-and-black-men.html )  as well as the summary of the paper (http://www.equality-of-opportunity.org/assets/documents/race_summary.pdf) to understand the data being plotted. I don’t think this is a very functional graph because it is difficult to understand the underlying numbers but, on the other hand, it is functional if we think that the purpose is to show the mobility to a non-academic audience that will understand the point of the results and implications and otherwise might get confused by the numbers. 
+
+•	Is it beautiful?
+
+I believe this plot is beautiful as it catches my attention, has movement, it is clear and also has just a few numbers to see at the end. 
+
+•	Is it insightful?
+I think this graph is insightful once you spend time to understand what is really happening. These are different scenarios taking a sample of 50,000 children and their starting point and outcomes following the percentages found in the original paper. These animations are insightful and thought for an audience that is probably not going to spend a lot of time to figure out where the numbers come from and to read the original paper but the main conclusions are being expressed in a clear and entertaining way. 
+
+•	Is it enlightening?
+I believe this graph is enlightening because is showing information that I didn’t know before seeing it about this paper. It is very interesting to see the distribution of black and white boys that is the most striking one. Income disparities and mobility is an extremely important subject given the enormous differences and inequality of opportunities by race. This research paper is extremely important and relevant for today’s policymakers and, in my opinion, the author of these graphs is trying to communicate the most important and insightful conclusions of the paper in a simple and dynamic way for a more general non-academic audience. 
+
+In conclusion, I believe that the author of this article did a good job in communicating the main findings of the academic paper for a particular audience that is not going to go deeper or that it can if they want to. 
+
+In my opinion all the graphs should have the starting point with the original income distribution of the starting point (real data) and not the assumption of equally distribution across income because it is what I consider “chart junk” in the sense that is not reflecting of the reality and real data of the study and it can be confusing. It also should include the fact that these 50 thousand children and hypothetical and not real data (originally 20 million).
+
+
+# Part 2: ggplot2 and the grammar of graphics
+
+
+```{r}
+setwd("~/Desktop/DATAVIZ")
+race <- read.csv("race dist totals.csv")
+
+
+race %>%
+  group_by()
+
+ggplot(data = race) + 
+  geom_bar(mapping = aes(x = COMMUNITY, y = race$Total.population), stat = "identity")
+```
+
+
+Is it truthful?
+Is it functional?
+Is it beautiful?
+Is it insightful?
+Is it enlightening?
+
+ • What is the story?
+
+The purpose of the following graphs is to look at the race and ethnicity distribution within each of the analyzed neighborhoods. The graphs show this distribution as a percentage of the neighborhood population and per totals. The main findings are that Austin, Bellwood and Maywood are mostly African American communities, while Berwin and Cicero are mainly Hispanic or Latino communities and finally, Forest Park, Oak Park and River Forest are white non-Hispanic majority communities. In terms of the population sizes, it is relevant to notice that the three most populated neighborhoods in the analysis are either African American (Austin) or Hispanic (Cicero and Berwin). 
+
+ • Why did you select this graphical form?
+
+Because it is very simple and straightforward, it shows the race and ethnicity distributions by neighborhood. It is easy to understand and the main findings are appartent. 
+
+Why did you use these specific channels to encode the data (e.g. spatial position, size, color, scale)?
+
+ • Why did you make any other data transformations?
+
+The percentages are useful to see the distributions within a neighborhood but also the total population counts are important to compare the size of each area. 
+How do these decisions facilitate effective communication?
+
+These decisions are helpful to convey the main conclusions of this data driven analysis because it collapses the information and makes apparent the striking difference across these neighboring areas where the population distribution is extremely different, as a consequence of the high racial segregation in Chicago.
 
 
