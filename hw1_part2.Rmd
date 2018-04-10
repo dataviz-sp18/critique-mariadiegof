@@ -1,0 +1,106 @@
+---
+title: "HW1_part 2"
+author: "Maria Diego"
+date: "4/10/2018"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(gridExtra)
+
+```
+
+# Part 2: ggplot2 and the grammar of graphics
+
+
+```{r}
+setwd("~/Desktop/DATAVIZ")
+race <- read.csv("race dist totals.csv")
+
+race %>%
+  group_by(race$COMMUNITY) %>%
+  count()
+
+ new_data_race <- race %>% 
+  group_by(COMMUNITY) %>% 
+  summarise(all = sum(Total.population), white = sum(White),black =sum(Black.or.African.American), asian = sum(Asian),other = sum(Other))
+ 
+  new_data_ethnicity <- race %>% 
+  group_by(COMMUNITY) %>% 
+  summarise(all = sum(Total.population), hispanic = sum(HISPANIC.OR.LATINO), not_hispanic = sum(NOT.HISPANIC.OR.LATINO))
+
+perc_race <- new_data_race %>%
+  transmute(community = COMMUNITY, white = white/all, black = black/all, asian = asian/all, other = other/all)
+
+perc_ethnicity <- new_data_ethnicity %>%
+  transmute(community = COMMUNITY, hisp  = hispanic/all, not_hisp = not_hispanic/all)
+
+
+race_tidy <- new_data_race %>% 
+  gather("all", "white", "black","asian", "other", key = "race", value = "population")
+
+ethnicity_tidy <- new_data_ethnicity %>% 
+  gather("all", "hispanic", "not_hispanic", key = "ethnicity", value = "population")
+
+race_perc_tidy <- perc_race %>%  
+  gather("white", "black","asian", "other", key = "race", value = "percentage")
+
+ethnicity_perc_tidy <- perc_ethnicity %>%  
+  gather("hisp", "not_hisp", key = "ethnicity", value = "percentage")
+
+plot1 <- ggplot(data = race_perc_tidy) + 
+  geom_bar(mapping = aes(x = community, y = percentage, fill = race), stat = "identity") + theme(axis.text.x = element_text(angle=60, hjust=1)) + labs(title = "Pecentage of population by race")
+
+plot2 <- ggplot(data = ethnicity_perc_tidy) + 
+  geom_bar(mapping = aes(x = community, y = percentage, fill = ethnicity), stat = "identity") + theme(axis.text.x = element_text(angle=60, hjust=1)) + labs(title = "Pecentage of population by ethnicity")
+
+grid.arrange(plot1, plot2, ncol=2)
+
+
+```
+
+
+Is it truthful?
+This plot is truthful because it is using demographic data from the United States Census Bureau. The transformations that I did to the data were simple agregations by community area given that the original data is at the tract level. Once I had the summation by tract, I created tidy data frames, which means that instead of having the different races and ethnicities in different columns I now have them as other variables so I can manipulate the dataframe in R and create the plot. 
+
+Is it functional?
+
+I believe this plot is functional as it manages to convey the message that there is an important racial and ethnic segregation accross this neighboring communities in the west side of Chicago.
+
+Is it beautiful?
+
+In my opinion, the use of the columns, the colors, and percentages make the plot beautiful. It doesnt have a lot of data or labels, given that the main point is to see the stiking differences across neighborhoods.
+
+Is it insightful?
+
+The graph is insightful because it is showing a message in a clear way and it is very easy to understand what is happening and to make comparison across communities.
+
+
+Is it enlightening?
+I believe that the graph is enlightening, because this analysis done in just a small part of Chicago makes apparent the level of racial segregation across these communities.  
+
+ • What is the story?
+
+The purpose of the following graphs is to look at the race and ethnicity distribution within each of the analyzed neighborhoods and across them. The graphs show this distribution as a percentage of the neighborhood population and per totals. The main findings are that Austin, Bellwood and Maywood are mostly African American communities, while Berwin and Cicero are mainly Hispanic or Latino communities and finally, Forest Park, Oak Park and River Forest are white non-Hispanic majority communities. 
+
+ • Why did you select this graphical form?
+
+I selected a stacked bar graph because it is very simple and straightforward, it shows the race and ethnicity distributions by neighborhood. It is easy to understand and the main findings are apparent to any reader even for those who are not familiarized with the subject. 
+
+ • Why did you use these specific channels to encode `the data (e.g. spatial position, size, color, scale)?
+
+The use of stacked columns with race and ethnicity distributions is used because it makes it easy to see the main message of these graphs. The use of percentages is used because the main goal of these graphs is to show the great inequality and segregation, which are easier to see when we have the same scale for all the neihborhoods done with the usea of proportions.  
+
+ • Why did you make any other data transformations?
+
+The percentages are useful to see the distributions within a neighborhood. After calculating these for each race and ethnicity, I used th function gather to make my data tidy and make it easy to manipulate in R. 
+
+ • How do these decisions facilitate effective communication?
+
+In conclusion, all these decisions are helpful to convey the main conclusions of this data driven analysis because it collapses the information and makes apparent the striking differences across these neighboring areas where the population distribution is extremely different, as a consequence of the high racial and ethnic segregation in Chicago.
+
+
